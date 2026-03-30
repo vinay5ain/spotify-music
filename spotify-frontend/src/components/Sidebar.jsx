@@ -4,18 +4,18 @@ import { assets } from './../assets/frontend-assets/assets';
 function Sidebar() {
     const navigate = useNavigate();
     return (
-        <div className='w-[25%] h-full flex-col gap-2 text-white hidden lg:flex'>
-            <div className="bg-[#121212] h-[15%] rounded-2xl flex flex-col justify-around">
+        <div className='w-[25%] h-full min-h-0 flex-col gap-2 text-white hidden lg:flex'>
+            <div className="bg-[#121212] h-28 rounded-2xl flex flex-col justify-around">
                 <div onClick={() => navigate("/")} className="flex items-center gap-3 pl-8 cursor-pointer">
                     <img className='w-6' src={assets.home_icon} alt="home icon" />
                     <p className='font-bold'>Home</p>
                 </div>
-                <div className="flex items-center gap-3 pl-8 cursor-pointer">
+                <div onClick={() => navigate("/search")} className="flex items-center gap-3 pl-8 cursor-pointer">
                     <img className='w-6' src={assets.search_icon} alt="search icon" />
                     <p className='font-bold'>Search</p>
                 </div>
             </div>
-            <div className="bg-[#121212] h-[85%] rounded-2xl">
+            <div className="bg-[#121212] flex-1 min-h-0 overflow-y-auto rounded-2xl">
                 <div className="p-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <img className='w-8' src={assets.stack_icon} alt="stack_icon" />
