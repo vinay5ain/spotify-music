@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../assets/frontend-assets/assets'
+import { useAuth } from '../context/AuthContext'
 
 function Navbar() {
     const navigate = useNavigate();
+    const { user, logout } = useAuth();
+    const initial = user?.name?.trim()?.[0]?.toUpperCase() || "?";
+
     return (
         <>
             <div className="w-full flex justify-between items-center font-semibold">
@@ -13,7 +17,20 @@ function Navbar() {
                 <div className="flex items-center gap-4">
                     <p className='bg-white text-black text-[15px] px-4 py-1 rounded-2xl hidden md:block cursor-pointer hover:scale-[1.02] transition-transform'>Explore Premium</p>
                     <p className='bg-black py-1 px-3 rounded-2xl text-[15px] cursor-pointer hover:bg-black/80'>Install App</p>
-                    <p className='bg-sky-400 text-black w-7 h-7 rounded-full flex items-center justify-center'>N</p>
+                    <button
+                        type="button"
+                        title={user?.name || "Account"}
+                        className='bg-[#1ed760] text-black w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold hover:brightness-110'
+                    >
+                        {initial}
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => { logout(); navigate('/login', { replace: true }); }}
+                        className="text-[13px] text-slate-300 hover:text-white underline-offset-2 hover:underline"
+                    >
+                        Log out
+                    </button>
                 </div>
             </div>
             <div className="flex items-center gap-2 mt-4">

@@ -1,27 +1,27 @@
-import { useContext } from 'react'
-import Display from './components/Display'
-import Player from './components/Player'
-import Sidebar from './components/Sidebar'
-import { PlayerContext } from './context/PlayerContext'
+import { Navigate, Route, Routes } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import MainLayout from "./components/MainLayout";
 
 const App = () => {
+  const { user, ready } = useAuth();
 
-  const { audioRef, track, songsData } = useContext(PlayerContext);
+  if (!ready) {
+    return (
+      <div className="h-screen bg-black flex items-center justify-center text-white text-sm">
+        Loading…
+      </div>
+    );
+  }
 
   return (
-    <div className='h-screen bg-black text-white overflow-hidden flex flex-col'>
-      {songsData.length !== 0 ?
-        <>
-          <div className="flex-1 min-h-0 flex gap-2 p-2">
-            <Sidebar />
-            <Display />
-          </div>
-          <Player />
-        </>
-        : null}
-      <audio ref={audioRef} src={track ? track.file : ""} preload='metadata' />
-    </div>
-  )
-}
+    <Routes>
+      <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
+      <Route path="/signup" element={user ? <Navigate to="/" replace /> : <Signup />} />
+      <Route path="/*" element={user ? <MainLayout /> : <Navigate to="/login" replace />} />
+    </Routes>
+  );
+};
 
-export default App
+export default App;
